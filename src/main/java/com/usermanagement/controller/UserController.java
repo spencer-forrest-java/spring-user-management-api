@@ -81,8 +81,8 @@ public class UserController {
     return new ResponseEntity<>(new UserDto(loginUser), jwtHeader, HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAuthority('user:create')")
   @PostMapping("/add")
+  @PreAuthorize("hasAuthority('user:create')")
   public ResponseEntity<UserDto> addUser(@RequestParam("newUsername") String newUsername,
                                          @RequestParam("newFirstName") String newFirstName,
                                          @RequestParam("newLastName") String newLastName,
@@ -148,15 +148,15 @@ public class UserController {
     return new ResponseEntity<>(new UserDto(updatedUser), HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAuthority('user:read')")
   @GetMapping("/list")
+  @PreAuthorize("hasAuthority('user:read')")
   public ResponseEntity<List<UserDto>> getAllUser() {
     List<UserDto> users = this.userService.getUsers().stream().map(UserDto::new).collect(Collectors.toList());
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
   @GetMapping("/reset-password/{email}")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
   public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email,
                                                     Authentication authentication)
       throws EmailNotFoundException, MessagingException {
@@ -189,8 +189,8 @@ public class UserController {
     return byteArrayOutputStream.toByteArray();
   }
 
-  @PreAuthorize("hasAuthority('user:delete')")
   @DeleteMapping("/delete/{username}")
+  @PreAuthorize("hasAuthority('user:delete')")
   public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username)
       throws IOException, SuperUserDeleteException {
     this.userService.deleteUser(username);

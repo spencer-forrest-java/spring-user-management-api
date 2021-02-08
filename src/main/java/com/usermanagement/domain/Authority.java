@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Data
 public class Authority {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false, updatable = false)
-	private long id;
-	private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(nullable = false, updatable = false)
+  private long id;
+  private String name;
 }

@@ -17,30 +17,30 @@ import java.io.OutputStream;
 @Component
 public class JwtAccessDeniedEntryPoint extends Http403ForbiddenEntryPoint {
 
-	/**
-	 * Always returns a 403 error code to the client.
-	 * Implementations should modify the headers on the ServletResponse as necessary to commence
-	 * the authentication process.
-	 *
-	 * @param request  – that resulted in an AuthenticationException
-	 * @param response – so that the user agent can begin authentication
-	 * @param arg2     – that caused the invocation
-	 */
-	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
-			throws IOException {
+  /**
+   * Always returns a 403 error code to the client.
+   * Implementations should modify the headers on the ServletResponse as necessary to commence
+   * the authentication process.
+   *
+   * @param request  – that resulted in an AuthenticationException
+   * @param response – so that the user agent can begin authentication
+   * @param arg2     – that caused the invocation
+   */
+  @Override
+  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
+      throws IOException {
 
-		HttpResponse httpResponse = new HttpResponse(HttpStatus.FORBIDDEN.value(),
-																								 HttpStatus.FORBIDDEN,
-																								 HttpStatus.FORBIDDEN.getReasonPhrase().toUpperCase(),
-																								 SecurityConstant.FORBIDDEN_MESSAGE);
-		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		response.setStatus(HttpStatus.FORBIDDEN.value());
+    HttpResponse httpResponse = new HttpResponse(HttpStatus.FORBIDDEN.value(),
+                                                 HttpStatus.FORBIDDEN,
+                                                 HttpStatus.FORBIDDEN.getReasonPhrase().toUpperCase(),
+                                                 SecurityConstant.FORBIDDEN_MESSAGE);
+    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    response.setStatus(HttpStatus.FORBIDDEN.value());
 
-		// add http response to http servlet response
-		OutputStream outputStream = response.getOutputStream();
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.writeValue(outputStream, httpResponse);
-		outputStream.flush();
-	}
+    // add http response to http servlet response
+    OutputStream outputStream = response.getOutputStream();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.writeValue(outputStream, httpResponse);
+    outputStream.flush();
+  }
 }

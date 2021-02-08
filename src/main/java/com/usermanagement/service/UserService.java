@@ -11,42 +11,42 @@ import java.util.List;
 
 public interface UserService {
 
-	User register(String firstName, String LastName, String username, String email)
-			throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException;
+  User register(String firstName, String LastName, String username, String email)
+      throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException;
 
-	User addNewUser(String firstName,
-									String lastName,
-									String username,
-									String email,
-									String role,
-									boolean isNotLocked,
-									boolean isActive,
-									MultipartFile profileImage)
-			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException;
+  User addNewUser(String firstName,
+                  String lastName,
+                  String username,
+                  String email,
+                  String role,
+                  boolean isNotLocked,
+                  boolean isActive,
+                  MultipartFile profileImage)
+      throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException;
 
-	User updateUser(String currentUsername,
-									String newUsername,
-									String newFirstName,
-									String newLastName,
-									String newEmail,
-									String newRole,
-									boolean isActive,
-									boolean isNotLocked,
-									MultipartFile profileImage,
-									boolean hasUpdateAuthority)
-			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException,
-						 SuperAdminUpdateException, RoleUpdateException;
+  User updateUser(String currentUsername,
+                  String newUsername,
+                  String newFirstName,
+                  String newLastName,
+                  String newEmail,
+                  String newRole,
+                  boolean isActive,
+                  boolean isNotLocked,
+                  MultipartFile profileImage,
+                  boolean hasUpdateAuthority)
+      throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException,
+             SuperAdminUpdateException, RoleUpdateException;
 
-	User updateProfileImage(String username, MultipartFile profileImage)
-			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException;
+  User updateProfileImage(String username, MultipartFile profileImage)
+      throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException;
 
-	User findByUserName(String username);
+  User findByUserName(String username);
 
-	User findByEmail(String email);
+  User findByEmail(String email);
 
-	List<User> getUsers();
+  List<User> getUsers();
 
-	void deleteUser(String username) throws IOException, SuperUserDeleteException;
+  void deleteUser(String username) throws IOException, SuperUserDeleteException;
 
-	void resetPassword(String email, Authentication authentication) throws EmailNotFoundException, MessagingException;
+  void resetPassword(String email, Authentication authentication) throws EmailNotFoundException, MessagingException;
 }

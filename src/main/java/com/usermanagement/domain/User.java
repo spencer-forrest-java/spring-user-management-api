@@ -9,22 +9,22 @@ import java.util.Date;
 @Data
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false, updatable = false)
-	private long id;
-	private String userId;
-	private String firstName;
-	private String lastName;
-	private String username;
-	private String password;
-	private String email;
-	private String profileImageUrl;
-	private Date lastLoginDate;
-	private Date lastLoginDisplay;
-	private Date joinDate;
-	private boolean isActive;
-	private boolean isNotLocked;
-	@ManyToOne
-	private Role role;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(nullable = false, updatable = false)
+  private long id;
+  private String userId;
+  private String firstName;
+  private String lastName;
+  private String username;
+  private String password;
+  private String email;
+  private String profileImageUrl;
+  private Date lastLoginDate;
+  private Date lastLoginDisplay;
+  private Date joinDate;
+  private boolean isActive;
+  private boolean isNotLocked;
+  @ManyToOne
+  private Role role;
 }

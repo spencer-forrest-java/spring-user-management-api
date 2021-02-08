@@ -13,14 +13,14 @@ import java.io.File;
 @PropertySource("classpath:email.properties")
 public class UserManagerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UserManagerApplication.class, args);
-		new File(FileConstant.DESKTOP_FOLDER).mkdirs();
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(UserManagerApplication.class, args);
+    new File(FileConstant.DESKTOP_FOLDER).mkdirs();
+  }
 
-	@Bean
-	BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+  @Bean
+  BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 }
 

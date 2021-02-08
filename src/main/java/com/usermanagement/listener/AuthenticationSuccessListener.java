@@ -9,19 +9,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationSuccessListener {
-	private final LoginAttemptService loginAttemptService;
 
-	@Autowired
-	public AuthenticationSuccessListener(LoginAttemptService loginAttemptService) {
-		this.loginAttemptService = loginAttemptService;
-	}
+  private final LoginAttemptService loginAttemptService;
 
-	@EventListener
-	public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
-		Object principal = event.getAuthentication().getPrincipal();
-		if (principal instanceof UserPrincipal) {
-			UserPrincipal user = (UserPrincipal) event.getAuthentication().getPrincipal();
-			loginAttemptService.removeUserFromCache(user.getUsername());
-		}
-	}
+  @Autowired
+  public AuthenticationSuccessListener(LoginAttemptService loginAttemptService) {
+    this.loginAttemptService = loginAttemptService;
+  }
+
+  @EventListener
+  public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
+    Object principal = event.getAuthentication().getPrincipal();
+    if (principal instanceof UserPrincipal) {
+      UserPrincipal user = (UserPrincipal) event.getAuthentication().getPrincipal();
+      loginAttemptService.removeUserFromCache(user.getUsername());
+    }
+  }
 }
