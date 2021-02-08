@@ -115,7 +115,7 @@ This API uses JWT token to authenticate and authorize users to perform certain a
   <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L94">BCrypt encoder</a>
 * An <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L135">authorization filter</a> 
   is used to process each HTTP request.
-* The <a href="src/main/java/com/usermanagement/filter/JwtAuthorizationFilter.java#56">authorization filter</a> 
+* The <a href="src/main/java/com/usermanagement/filter/JwtAuthorizationFilter.java#L56">authorization filter</a> 
   checks if the JWT token is valid and sets the spring security context accordingly.
 * The spring security context is used in the <a href="src/main/java/com/usermanagement/controller">controller</a> 
   to authenticate and authorize a user to perform certain actions.
