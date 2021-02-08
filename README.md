@@ -110,10 +110,10 @@ or by having their password reset by an admin or a super admin.<br>
 This API uses JWT token to authenticate and authorize users to perform certain actions. Some actions do not need a token. 
 (see <a href="src/main/java/com/usermanagement/utility/SecurityConstant.java#L13">URLS</a>)
 <br><br>
-<a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L110">Spring Security configuration</a>: 
+<a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java">Spring Security configuration</a>: 
 * Passwords are encrypted using 
   <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L94">BCrypt encoder</a>
-* An <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L121">authorization filter</a> 
+* An <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L135">authorization filter</a> 
   is used to process each HTTP request.
 * The <a href="src/main/java/com/usermanagement/filter/JwtAuthorizationFilter.java#56">authorization filter</a> 
   checks if the JWT token is valid and sets the spring security context accordingly.
