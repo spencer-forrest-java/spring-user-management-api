@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 	private final JwtAuthorizationFilter authorizationFilter;
 	private final JwtAccessDeniedEntryPoint accessDeniedEntryPoint;
 	private final JwtAccessDeniedHandler accessDeniedHandler;
@@ -87,11 +88,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * </pre>
 	 *
 	 * @param auth the {@link AuthenticationManagerBuilder} to use
-	 *
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(this.userDetailsService).passwordEncoder(this.bCryptPasswordEncoder);
+	}
+
+	/**
+	 * Gets the {@link AuthenticationManager} to use. The default strategy is if
+	 * {@link #configure(AuthenticationManagerBuilder)} method is overridden to use the
+	 * {@link AuthenticationManagerBuilder} that was passed in. Otherwise, autowire the
+	 * {@link AuthenticationManager} by type.
+	 *
+	 * @return the {@link AuthenticationManager} to use
+	 */
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 	/**
@@ -119,20 +133,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(this.accessDeniedEntryPoint)
 				.and()
 				.addFilterBefore(this.authorizationFilter, UsernamePasswordAuthenticationFilter.class);
-	}
-
-	/**
-	 * Gets the {@link AuthenticationManager} to use. The default strategy is if
-	 * {@link #configure(AuthenticationManagerBuilder)} method is overridden to use the
-	 * {@link AuthenticationManagerBuilder} that was passed in. Otherwise, autowire the
-	 * {@link AuthenticationManager} by type.
-	 *
-	 * @return the {@link AuthenticationManager} to use
-	 *
-	 */
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
 	}
 }
