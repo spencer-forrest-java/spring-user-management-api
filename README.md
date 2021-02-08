@@ -111,6 +111,8 @@ This API uses JWT token to authenticate and authorize users to perform certain a
 (see <a href="src/main/java/com/usermanagement/utility/SecurityConstant.java#L13">URLS</a>)
 <br><br>
 <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L110">Spring Security configuration</a>: 
+* Passwords are encrypted using 
+  <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L94">BCrypt encoder</a>
 * An <a href="src/main/java/com/usermanagement/configuration/SecurityConfiguration.java#L121">authorization filter</a> 
   is used to process each HTTP request.
 * The <a href="src/main/java/com/usermanagement/filter/JwtAuthorizationFilter.java#56">authorization filter</a> 
@@ -135,7 +137,7 @@ to connect to the email account that will sent email to the user upon resetting 
 
 ### Database
 The file <a href="sql/create.sql">create.sql<a/> is a script to create a user table and insert a 
-<a href="sql/create.sql#58">special admin user</a>.
+<a href="sql/create.sql#L58">special admin user</a>.
 <br>
 This special admin is not present in the list returned by
 <a href="src/main/java/com/usermanagement/controller/UserController.java#L152">GET "/user/list"</a>
