@@ -2,7 +2,6 @@ package com.usermanagement.utility;
 
 public class SecurityConstant {
 
-  public static final String ACCESS_DENIED_MESSAGE = "You do not have the permission to access this page";
   public static final String AUTHORITIES = "authorities";
   public static final long EXPIRATION_TIME = 86_400_000; // 1 day in ms
   public static final String FORBIDDEN_MESSAGE = "You need to login to access this page";
