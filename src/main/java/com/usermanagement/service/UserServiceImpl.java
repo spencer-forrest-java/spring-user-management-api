@@ -3,7 +3,6 @@ package com.usermanagement.service;
 import com.usermanagement.domain.Role;
 import com.usermanagement.domain.User;
 import com.usermanagement.domain.UserPrincipal;
-import com.usermanagement.enumeration.RoleEnum;
 import com.usermanagement.exception.domain.*;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -221,10 +219,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public void resetPassword(String email, Authentication authentication)
 			throws EmailNotFoundException, MessagingException {
 
-		String role = this.userRepository.findUserByUsername(authentication.getName()).getRole().getName();
-		if(!role.equalsIgnoreCase(RoleEnum.SUPER_ADMIN.label) && !role.equalsIgnoreCase(RoleEnum.ADMIN.label)){
-			throw new AccessDeniedException(null);
-		}
 		User user = this.findByEmail(email);
 		if (user == null) {
 			throw new EmailNotFoundException(NO_USER_FOUND_BY_EMAIL + email);

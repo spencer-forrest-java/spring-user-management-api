@@ -8,7 +8,7 @@ import com.usermanagement.service.UserService;
 import com.usermanagement.utility.FileConstant;
 import com.usermanagement.utility.JWTUtility;
 import com.usermanagement.utility.SecurityConstant;
-import dto.UserDto;
+import com.usermanagement.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -148,12 +148,14 @@ public class UserController {
 		return new ResponseEntity<>(new UserDto(updatedUser), HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('user:read')")
 	@GetMapping("/list")
 	public ResponseEntity<List<UserDto>> getAllUser() {
 		List<UserDto> users = this.userService.getUsers().stream().map(UserDto::new).collect(Collectors.toList());
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
 	@GetMapping("/reset-password/{email}")
 	public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email,
 																										Authentication authentication)

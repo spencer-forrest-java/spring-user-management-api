@@ -54,7 +54,7 @@ CREATE TABLE `user` (
   CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- password : 'fun123'
+-- password encrypted with BCrypt: 'fun123'
 INSERT INTO user (username, password, email, first_name, last_name, is_active, is_not_locked, user_id, role_id) 
 VALUES ('admin','$2y$10$xH6RLbqxHzJthif0Dv4H.Ok0ex55jjODYsv4s9pNC5sehePoLMv9i', 'email@example.com', 'admin', 'admin', true, true,'1234567890', 4);
 

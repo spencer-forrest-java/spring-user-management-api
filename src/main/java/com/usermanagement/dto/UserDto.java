@@ -1,11 +1,11 @@
-package dto;
+package com.usermanagement.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.usermanagement.domain.Authority;
 import com.usermanagement.domain.User;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Data
@@ -14,6 +14,7 @@ public class UserDto {
 	private String userId;
 	private String username;
 	private String email;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -23,11 +24,9 @@ public class UserDto {
 	private Date lastLoginDisplay;
 	private boolean isActive;
 	private boolean isNotLocked;
-	@ManyToOne
 	private String role;
 	private String[] authorities;
 
-	// Jackson library needs it
 	public UserDto() {
 	}
 
