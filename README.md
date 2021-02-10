@@ -1,6 +1,10 @@
 # User Management API
 
-Web API to perform CRUD operations on users and reset password.
+Web API to perform CRUD operations on users and reset passwords.<br>
+(Front-End - <a href="https://github.com/spencer-forrest-java/spring-user-management-client">User Management Client</a>)
+<br><br>
+For any questions contact me at
+[Spencer Forrest](mailto:spencer.forrest.jave@gmail.com?subject=[GitHub]%20User%20Management%20API).
 
 #### Technologies used
 
