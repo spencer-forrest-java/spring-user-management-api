@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFailureListener {
 
+  public static final String SPECIAL_ADMIN_USERNAME = "admin";
   private final LoginAttemptService loginAttemptService;
 
   @Autowired
@@ -20,8 +21,11 @@ public class AuthenticationFailureListener {
   public void onAuthenticationFailure(AuthenticationFailureBadCredentialsEvent event) {
     Object principal = event.getAuthentication().getPrincipal();
     if (principal instanceof String) {
-      String username = (String) event.getAuthentication().getPrincipal();
-      loginAttemptService.addUserToCache(username);
+      String username = (String) principal;
+      // Does not apply to special admin
+      if (!username.equalsIgnoreCase(SPECIAL_ADMIN_USERNAME)) {
+        loginAttemptService.addUserToCache(username);
+      }
     }
   }
 }
