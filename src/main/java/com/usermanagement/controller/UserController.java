@@ -118,7 +118,7 @@ public class UserController {
                                                           required = false) MultipartFile profileImage,
                                             Authentication authentication)
       throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException,
-             SuperAdminUpdateException, RoleUpdateException {
+             SpecialAdminUpdateException, RoleUpdateException {
 
     boolean isAuthorizeToUpdate = this.authorizeToUpdate(currentUsername, authentication);
 
@@ -159,7 +159,7 @@ public class UserController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
   public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email,
                                                     Authentication authentication)
-      throws EmailNotFoundException, MessagingException {
+      throws EmailNotFoundException, MessagingException, SpecialAdminResetPasswordException {
     this.userService.resetPassword(email, authentication);
     return createResponseEntity("Reset password sent to: " + email);
   }
@@ -192,7 +192,7 @@ public class UserController {
   @DeleteMapping("/delete/{username}")
   @PreAuthorize("hasAuthority('user:delete')")
   public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username)
-      throws IOException, SuperUserDeleteException {
+      throws IOException, SpecialAdminDeleteException {
     this.userService.deleteUser(username);
     return this.createResponseEntity(USER_DELETED_SUCCESSFULLY);
   }

@@ -1,6 +1,6 @@
 package com.usermanagement.exception.domain;
 
-public class SuperAdminUpdateException extends Exception {
+public class SpecialAdminDeleteException extends Exception {
 
   /**
    * Constructs a new exception with the specified detail message.  The
@@ -10,7 +10,7 @@ public class SuperAdminUpdateException extends Exception {
    * @param message the detail message. The detail message is saved for
    *                later retrieval by the {@link #getMessage()} method.
    */
-  public SuperAdminUpdateException(String message) {
+  public SpecialAdminDeleteException(String message) {
     super(message);
   }
 }

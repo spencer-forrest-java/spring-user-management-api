@@ -63,13 +63,18 @@ public class ExceptionHandling implements ErrorController {
     return createHttpResponse(HttpStatus.FORBIDDEN, exception.getMessage());
   }
 
-  @ExceptionHandler(SuperAdminUpdateException.class)
-  public ResponseEntity<HttpResponse> superUserUpdateException(SuperAdminUpdateException exception) {
+  @ExceptionHandler(SpecialAdminUpdateException.class)
+  public ResponseEntity<HttpResponse> specialAdminUpdateException(SpecialAdminUpdateException exception) {
     return createHttpResponse(HttpStatus.FORBIDDEN, exception.getMessage());
   }
 
-  @ExceptionHandler(SuperUserDeleteException.class)
-  public ResponseEntity<HttpResponse> superUserDeleteException(SuperUserDeleteException exception) {
+  @ExceptionHandler(SpecialAdminDeleteException.class)
+  public ResponseEntity<HttpResponse> specialAdminDeleteException(SpecialAdminDeleteException exception) {
+    return createHttpResponse(HttpStatus.FORBIDDEN, exception.getMessage());
+  }
+
+  @ExceptionHandler(SpecialAdminResetPasswordException.class)
+  public ResponseEntity<HttpResponse> specialAdminResetPasswordException(SpecialAdminResetPasswordException exception) {
     return createHttpResponse(HttpStatus.FORBIDDEN, exception.getMessage());
   }
 

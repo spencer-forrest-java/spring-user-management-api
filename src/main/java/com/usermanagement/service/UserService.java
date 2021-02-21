@@ -35,7 +35,7 @@ public interface UserService {
                   MultipartFile profileImage,
                   boolean hasUpdateAuthority)
       throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException,
-             SuperAdminUpdateException, RoleUpdateException;
+             SpecialAdminUpdateException, RoleUpdateException;
 
   User updateProfileImage(String username, MultipartFile profileImage)
       throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException;
@@ -46,7 +46,8 @@ public interface UserService {
 
   List<User> getUsers();
 
-  void deleteUser(String username) throws IOException, SuperUserDeleteException;
+  void deleteUser(String username) throws IOException, SpecialAdminDeleteException;
 
-  void resetPassword(String email, Authentication authentication) throws EmailNotFoundException, MessagingException;
+  void resetPassword(String email, Authentication authentication)
+      throws EmailNotFoundException, MessagingException, SpecialAdminResetPasswordException;
 }

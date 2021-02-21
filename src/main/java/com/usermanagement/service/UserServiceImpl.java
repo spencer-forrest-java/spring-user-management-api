@@ -43,7 +43,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
   private static final String EMAIL_ALREADY_TAKEN_BY_ANOTHER_USER = "Email already taken by another user";
   private static final String NO_USER_FOUND_BY_EMAIL = "No user found for email: ";
-  private static final String SUPER_USER_USERNAME = "admin";
+  private static final String SPECIAL_ADMIN_DELETION_FORBIDDEN = "It is forbidden to delete this user";
+  private static final String SPECIAL_ADMIN_RESET_PASSWORD_FORBIDDEN = "It is forbidden to reset this user's password";
+  private static final String SPECIAL_ADMIN_UPDATE_FORBIDDEN = "It is forbidden to update this user";
+  private static final String SPECIAL_ADMIN_USERNAME = "admin";
   private static final String USERNAME_ALREADY_TAKEN_BY_ANOTHER_USER = "Username already taken by another user";
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
@@ -51,7 +54,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   private final LoginAttemptService loginAttemptService;
   private final EmailService emailService;
   private final Logger logger = LoggerFactory.getLogger(getClass());
-  private String superAdminUsername;
   private Role userRole;
 
   @Autowired
@@ -69,8 +71,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
   @PostConstruct
   public void postConstructor() {
-    User user = this.userRepository.findUserByUsername(SUPER_USER_USERNAME);
-    this.superAdminUsername = user == null ? "" : user.getUsername();
     this.userRole = this.roleRepository.findByName("ROLE_USER");
   }
 
@@ -154,11 +154,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                          MultipartFile profileImage,
                          boolean hasUpdateAuthority)
       throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotImageException,
-             SuperAdminUpdateException, RoleUpdateException {
+             SpecialAdminUpdateException, RoleUpdateException {
 
     // forbid super user to be updated
-    if (this.superAdminUsername.equals(currentUsername)) {
-      throw new SuperAdminUpdateException("It is forbidden to update this user");
+    if (currentUsername.equalsIgnoreCase(SPECIAL_ADMIN_USERNAME)) {
+      throw new SpecialAdminUpdateException(SPECIAL_ADMIN_UPDATE_FORBIDDEN);
     }
 
     User currentUser = Objects.requireNonNull(this.validateNewUsernameAndEmail(currentUsername, newUsername, newEmail));
@@ -207,9 +207,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
-  public void deleteUser(String username) throws IOException, SuperUserDeleteException {
-    if (this.superAdminUsername.equals(username)) {
-      throw new SuperUserDeleteException("It is forbidden to delete this user");
+  public void deleteUser(String username) throws IOException, SpecialAdminDeleteException {
+    if (username.equalsIgnoreCase(SPECIAL_ADMIN_USERNAME)) {
+      throw new SpecialAdminDeleteException(SPECIAL_ADMIN_DELETION_FORBIDDEN);
     }
     this.deleteProfileImage(username);
     this.userRepository.deleteUserByUsername(username);
@@ -217,11 +217,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
   @Override
   public void resetPassword(String email, Authentication authentication)
-      throws EmailNotFoundException, MessagingException {
+      throws EmailNotFoundException, MessagingException, SpecialAdminResetPasswordException {
 
     User user = this.findByEmail(email);
     if (user == null) {
       throw new EmailNotFoundException(NO_USER_FOUND_BY_EMAIL + email);
+    }
+    if (user.getUsername().equalsIgnoreCase(SPECIAL_ADMIN_USERNAME)) {
+      throw new SpecialAdminResetPasswordException(SPECIAL_ADMIN_RESET_PASSWORD_FORBIDDEN);
     }
     String password = this.generatePassword();
     user.setPassword(this.passwordEncoder.encode(password));
