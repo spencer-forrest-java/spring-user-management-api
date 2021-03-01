@@ -23,12 +23,4 @@ public class HttpResponse {
     this.message = message;
     this.timeStamp = LocalDateTime.now();
   }
-
-  // needed for jackson
-//	public String getTimeStamp() {
-//		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss z");
-//		ZoneId zoneId = ZoneId.of("Europe/Paris");
-//		ZonedDateTime zonedDateTime = this.timeStamp.atZone(zoneId);
-//		return dateTimeFormatter.format(zonedDateTime);
-//	}
 }

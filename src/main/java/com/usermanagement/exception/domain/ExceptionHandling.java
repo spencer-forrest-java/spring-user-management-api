@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class ExceptionHandling implements ErrorController {
   private static final String METHOD_IS_NOT_ALLOWED =
       "This method request is not allowed on this endpoint. Please send a '%s' request";
   private static final String NOT_ENOUGH_PERMISSION = "You do not have enough permission to perform this action";
+  private static final String PICTURE_BIGGER_THAN_1_MB = "Image's size is more than 1 MB.";
+
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   @ExceptionHandler(DisabledException.class)
@@ -56,6 +59,11 @@ public class ExceptionHandling implements ErrorController {
   @ExceptionHandler(NotImageException.class)
   public ResponseEntity<HttpResponse> notImageException(NotImageException exception) {
     return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+  }
+
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
+  public ResponseEntity<HttpResponse> maxUploadSizeExceededException() {
+    return createHttpResponse(HttpStatus.BAD_REQUEST, PICTURE_BIGGER_THAN_1_MB);
   }
 
   @ExceptionHandler(RoleUpdateException.class)

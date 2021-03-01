@@ -12,7 +12,8 @@ import java.util.List;
 public interface UserService {
 
   User register(String firstName, String LastName, String username, String email)
-      throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException;
+      throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException, IOException,
+             NotImageException;
 
   User addNewUser(String firstName,
                   String lastName,

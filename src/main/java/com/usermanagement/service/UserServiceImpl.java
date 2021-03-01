@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     this.userRepository.save(user);
     this.emailService.sendEmail(firstName, password, email);
 
-    logger.info("user password: " + password);
+//    logger.info("user password: " + password);
     return user;
   }
 
@@ -255,7 +255,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   private void deleteProfileImage(String username) throws IOException {
     User user = userRepository.findUserByUsername(username);
     if (user != null) {
-      Path profileImageDirectory = Paths.get(DESKTOP_FOLDER + user.getUserId()).toAbsolutePath().normalize();
+      Path profileImageDirectory = Paths.get(APPLICATION_PATH + user.getUserId()).toAbsolutePath().normalize();
       FileUtils.deleteDirectory(new File(profileImageDirectory.toString()));
       logger.info("Directory deleted: " + profileImageDirectory.toAbsolutePath().toString());
     }
@@ -285,14 +285,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                                       .toUriString();
   }
 
-  private void saveProfileImage(User user, MultipartFile profileImage) throws IOException, NotImageException {
+  private void saveProfileImage(User user, MultipartFile profileImage)
+      throws IOException, NotImageException {
     if (profileImage != null) {
       if (!Arrays.asList(MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE)
                  .contains(profileImage.getContentType())) {
         throw new NotImageException(profileImage.getOriginalFilename() + " is not an image. Please upload an image");
       }
 
-      Path userFolder = Paths.get(DESKTOP_FOLDER + user.getUserId()).toAbsolutePath().normalize();
+      Path userFolder = Paths.get(APPLICATION_PATH + user.getUserId()).toAbsolutePath().normalize();
 
       if (!Files.exists(userFolder)) {
         Files.createDirectories(userFolder);

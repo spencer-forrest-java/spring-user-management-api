@@ -55,7 +55,8 @@ public class UserController {
 
   @PostMapping("/register")
   public ResponseEntity<UserDto> register(@RequestBody UserDto user)
-      throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException {
+      throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException, IOException,
+             NotImageException {
 
     User newUser = this.userService.register(user.getFirstName(),
                                              user.getLastName(),
@@ -168,14 +169,14 @@ public class UserController {
   public byte[] getProfileImage(@PathVariable("userId") long userId, @PathVariable("fileName") String fileName)
       throws IOException {
     Path path =
-        Paths.get(FileConstant.DESKTOP_FOLDER + userId + FileConstant.FORWARD_SLASH + fileName);
+        Paths.get(FileConstant.APPLICATION_PATH + userId + FileConstant.FORWARD_SLASH + fileName);
     return Files.readAllBytes(path);
   }
 
   @GetMapping(path = "/image/profile/{username}", produces = MediaType.IMAGE_JPEG_VALUE)
   public byte[] getTemporaryProfileImage(@PathVariable("username") String username)
       throws IOException {
-    URL url = new URL(FileConstant.TEMP_PROFILE_BASED_URL + username);
+    URL url = new URL(FileConstant.TEMP_PROFILE_BASED_URL + username + FileConstant.TEMP_PROFILE_URL_SUFFIX);
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
     try (InputStream inputStream = url.openConnection().getInputStream()) {

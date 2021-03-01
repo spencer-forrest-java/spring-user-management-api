@@ -68,8 +68,14 @@ public class EmailService {
   }
 
   private Message createEmail(String firstName, String password, String email) throws MessagingException {
-    String text = "Hello " + firstName + ",\n\n Your new account password is: " + password
-        + "\n\nUser Management Application";
+    String newLine = System.getProperty("line.separator");
+    String text = "Hello " + firstName + ","
+        + newLine
+        + newLine
+        + "Your new account password is: " + password
+        + newLine
+        + newLine
+        + "User Management Application";
     Message message = new MimeMessage(getEmailSession());
     message.setFrom(new InternetAddress(senderEmail));
     message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));

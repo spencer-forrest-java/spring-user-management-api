@@ -15,7 +15,7 @@ public class UserManagerApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(UserManagerApplication.class, args);
-    new File(FileConstant.DESKTOP_FOLDER).mkdirs();
+    new File(FileConstant.APPLICATION_PATH).mkdirs();
   }
 
   @Bean
